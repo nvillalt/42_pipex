@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/05/31 22:39:45 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:47:53 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	wait_processes(int child_pid)
 		}
 		i++;
 	}
+	return (1);
 }
 
 int	main(int argc, char **argv, char **env)
