@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/05/31 20:49:56 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:02:58 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	exec_path(char *argv, char **envp)
 		if (err == -1)
 			return (leave_program(path, commands));
 	}
-	else if (access(path, X_OK))
+	if (access(path, X_OK))
 		perror("pipex error");
 	free(path);
 	free_commands(commands);

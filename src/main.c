@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/05/31 20:43:53 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:05:48 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	int	status;
 	int	pip[2]; // fd[0] es el read end de la pipe y fd[1] es el write end de la pipe - 0 on success, -1 on error
 
 	if (argc != 5)
@@ -30,6 +31,11 @@ int	main(int argc, char **argv, char **env)
 	if (pipe(pip) == -1)
 		return (leave_program(NULL, NULL));
 	first_child(pip, argv, env);
+	close(pip[1]);
 	second_child(pip, argv, env);
+	close(pip[0]);
+	wait(&status);
+	if (status != 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
