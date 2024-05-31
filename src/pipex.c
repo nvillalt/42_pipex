@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/05/31 20:51:52 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:42:00 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	first_child(int *pip, char **argv, char **env)
 	return (EXIT_SUCCESS); // No llega aquí porque execve hace que se pire del proceso pero para que no dé guerra
 }
 
-int	second_child(int *pip, char **argv, char **env)
+int	second_child(int *pip, char **argv, char **env, int *child_pid)
 {
 	int		fdout;
 	pid_t	pid;
@@ -72,6 +72,7 @@ int	second_child(int *pip, char **argv, char **env)
 		dup2(pip[0], STDIN_FILENO); // Redirigir el STDIN al extremo de lectura de la pipe ya que quiero leer de ahí, no de la consola
 		close(fdout);
 		close(pip[0]);
+		*child_pid = (int)pid;
 		exec_path(argv[3], env);
 	}
 	return (EXIT_SUCCESS);
