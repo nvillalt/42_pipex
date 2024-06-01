@@ -6,30 +6,11 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/06/01 20:11:57 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:23:56 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
-
-/*
-
-	On the success of a fork() system call:
-
-    - The Process ID (PID) of the child process is returned to the parent process.
-   -  0 is returned to the child process. // Because it refers to the Parent Process -> 0
-
-	Child Process: A child process is created by a parent process 
-	in an operating system using a fork() system call. 
-	A child process may also be known as subprocess or a subtask.
-
-    - A child process is created as a copy of its parent process.
-    - The child process inherits most of its attributes.
-    - If a child process has no parent process, then the child process is created directly by the kernel.
-    - If a child process exits or is interrupted, then a SIGCHLD signal is sent to the parent process 
-	to inform about the termination or exit of the child process.
-
-*/
 
 int	first_child(int *pip, char **argv, char **env)
 {

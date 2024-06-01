@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/06/01 20:11:48 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:20:51 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,16 @@ char	*dup_path(char *cmd, char **env)
 	char	*final;
 
 	dup = NULL;
-	if (env)
+	final = NULL;
+	if (env && *cmd)
 	{
 		dup = get_path(env);
 		final = get_final(dup, cmd);
 		if (!final)
 			leave_program(NULL, dup);
 	}
-	free_commands(dup);
+	if (dup)
+		free_commands(dup);
 	return (final);
 }
 
@@ -99,6 +101,8 @@ void	exec_path(char *s, char **env)
 	char	*path;
 	char	**cmds;
 
+	if (!*s)
+		error_exit();
 	if (!access(s, X_OK))
 		path = s;
 	else if (access(s, X_OK))

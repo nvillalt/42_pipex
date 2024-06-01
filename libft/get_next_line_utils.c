@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 15:39:08 by fmoran-m          #+#    #+#             */
-/*   Updated: 2024/05/17 18:42:53 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:22:30 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 		return (NULL);
 	i = 0;
 	k = 0;
-	ptr = (char *)ft_calloc((ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1), sizeof(char));
+	ptr = (char *)ft_calloc((ft_strlen_gnl(s1) + ft_strlen_gnl(s2)
+				+ 1), sizeof(char));
 	if (!ptr)
 		return (NULL);
 	while (s1[i])
@@ -54,7 +55,6 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 		k++;
 	}
 	free(s1);
-	free(s2);
 	return (ptr);
 }
 

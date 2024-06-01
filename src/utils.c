@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/05/31 19:53:23 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:23:53 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	leave_program(char *path, char **commands)
 	exit(EXIT_FAILURE);
 }
 
-int	error_exit()
+int	error_exit(void)
 {
 	perror("pipex error");
 	exit(EXIT_FAILURE);

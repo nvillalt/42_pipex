@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:23:25 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/04/21 18:27:03 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:22:00 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
-}t_list;
+}	t_list;
 
 void		ft_bzero(void *ptr, size_t n);
 void		ft_putchar_fd(char c, int fd);
