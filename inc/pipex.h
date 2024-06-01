@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/06/01 20:23:41 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:38:43 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define WIFSIGNALED_MSG "process terminated via signal"
 # define WIFSTOPPED_MSG "process stopped"
 # define SUCCESS_MSG "successful end"
+# define ERROR "pipex error: Empty command"
 
 // pipex.c
 int		first_child(int *pip, char **argv, char **env);

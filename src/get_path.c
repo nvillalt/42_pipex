@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/06/01 20:20:51 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:30:34 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,10 @@ void	exec_path(char *s, char **env)
 	char	**cmds;
 
 	if (!*s)
-		error_exit();
+	{
+		ft_putendl_fd(ERROR, 2);
+		exit(EXIT_FAILURE);
+	}
 	if (!access(s, X_OK))
 		path = s;
 	else if (access(s, X_OK))

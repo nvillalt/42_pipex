@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/06/01 20:22:48 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:37:28 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **env)
 	if (pipe(pip) == -1)
 		return (leave_program(NULL, NULL));
 	first_child(pip, argv, env);
+	close(pip[1]);
 	second_child(pip, argv, env);
 	close(pip[0]);
 	while (i < 2)
