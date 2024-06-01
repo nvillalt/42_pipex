@@ -6,89 +6,111 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/05/31 22:02:58 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:11:48 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-static char	**get_environment(char **envp, char *argv)
+static char	*find_env_path(char **env)
 {
-	char	*path;
-	char	**variables;
+	char	*str;
 	int		i;
 
 	i = 0;
-	variables = NULL;
-	if (envp == NULL || argv[0] == '/' || argv[0] == '.')
-		return (NULL);
-	while (envp[i])
+	while (env[i] != NULL)
 	{
-		path = envp[i];
-		if (!ft_strncmp(path, "PATH", 4))
-		{
-			path = ft_strchr(path, '=');
-			path++;
-			variables = ft_split(path, ':');
-			if (!variables)
-				return (NULL);
-			break ;
-		}
+		if (!ft_strncmp(env[i], "PATH=", 5))
+			str = ft_strtrim(env[i], "PATH=");
 		i++;
 	}
-	return (variables);
+	return (str);
 }
 
-char	*join_path_env(char **variables, char **commands)
+static char	**get_path(char **env)
 {
+	char	**path;
 	char	*aux;
-	char	*path;
+	char	*oneline;
 	int		i;
 
-	path = NULL;
-	if (variables != NULL)
+	if (!env)
+		return (NULL);
+	i = -1;
+	oneline = find_env_path(env);
+	path = ft_split(oneline, ':');
+	if (!path)
+		return (NULL);
+	while (path[++i])
 	{
-		i = 0;
-		while (variables[i])
+		aux = ft_strjoin(path[i], "/");
+		if (!aux)
 		{
-			aux = ft_strjoin(variables[i], "/");
-			path = ft_strjoin(aux, commands[0]);
-			free(aux);
-			if (!access(path, X_OK))
-			{
-				free_commands(variables);
-				return (path);
-			}
-			free(path);
-			i++;
+			free_commands(path);
+			return (NULL);
 		}
+		free(path[i]);
+		path[i] = aux;
 	}
-	else if (!variables)
-		path = ft_strdup(commands[0]);
+	free(oneline);
 	return (path);
 }
 
-int	exec_path(char *argv, char **envp)
+char	*get_final(char **dup, char *cmd)
 {
-	int		err;
-	char	*path;
-	char	**variables;
-	char	**commands;
+	char	**cmds;
+	char	*route;
+	int		i;
 
-	variables = NULL;
-	if (envp != NULL)
-		variables = get_environment(envp, argv);
-	commands = ft_split(argv, ' ');
-	path = join_path_env(variables, commands);
-	if (!access(path, X_OK))
+	i = 0;
+	cmds = ft_split(cmd, ' ');
+	while (dup[i])
 	{
-		err = execve(path, commands, envp);
-		if (err == -1)
-			return (leave_program(path, commands));
+		route = ft_strjoin(dup[i], cmds[0]);
+		if (!access(route, X_OK))
+			return (route);
+		else
+			free(route);
+		i++;
 	}
-	if (access(path, X_OK))
+	free_commands(cmds);
+	return (NULL);
+}
+
+char	*dup_path(char *cmd, char **env)
+{
+	char	**dup;
+	char	*final;
+
+	dup = NULL;
+	if (env)
+	{
+		dup = get_path(env);
+		final = get_final(dup, cmd);
+		if (!final)
+			leave_program(NULL, dup);
+	}
+	free_commands(dup);
+	return (final);
+}
+
+void	exec_path(char *s, char **env)
+{
+	char	*path;
+	char	**cmds;
+
+	if (!access(s, X_OK))
+		path = s;
+	else if (access(s, X_OK))
+		path = dup_path(s, env);
+	cmds = ft_split(s, ' ');
+	if (!cmds)
+		leave_program(path, cmds);
+	if (execve(path, cmds, env) == -1)
+	{
 		perror("pipex error");
-	free(path);
-	free_commands(commands);
-	return (EXIT_SUCCESS);
+		free(path);
+		free_commands(cmds);
+		exit(EXIT_FAILURE);
+	}
 }

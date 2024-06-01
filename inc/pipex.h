@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/05/31 23:17:42 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:50:08 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		first_child(int *pip, char **argv, char **env);
 int		second_child(int *pip, char **argv, char **env);
 
 // get_path.c
-int		exec_path(char *argv, char **envp);
+void		exec_path(char *argv, char **env);
 
 // utils.c
 int		argument_error();

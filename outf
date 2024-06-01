@@ -2,6 +2,6 @@ inc
 libft
 Makefile
 obj
-out
+outf
 pipex
 src

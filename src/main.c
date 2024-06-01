@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/05/31 23:18:18 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:11:54 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char **argv, char **env)
 		return (leave_program(NULL, NULL));
 	first_child(pip, argv, env);
 	second_child(pip, argv, env);
+	close(pip[0]);
 	while (i < 2)
 	{
 		wait(&status);

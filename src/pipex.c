@@ -6,7 +6,7 @@
 /*   By: nvillalt <nvillalt@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 18:53:10 by nvillalt          #+#    #+#             */
-/*   Updated: 2024/05/31 23:18:07 by nvillalt         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:11:57 by nvillalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ int	first_child(int *pip, char **argv, char **env)
 		fdin = open(argv[1], O_RDONLY);
 		if (fdin == -1)
 			return (error_exit());
-		close(pip[0]); // Cerrar la entrada de lectura de la pipe ya que yo quiero escribir en esta pipe, no leer de esta pipe
-		dup2(fdin, STDIN_FILENO); // El documento pasa a ser el STDIN
-		dup2(pip[1], STDOUT_FILENO); // Redirigir el STDOUT al extremo de escritura de la pipe para que el siguiente proceso pueda leer de esto
-		close(fdin); // Cerrar el doc porque ya está redirigido al STDIN, ahora el STDIN "es" el doc desde el que se lee
+		close(pip[0]);
+		dup2(fdin, STDIN_FILENO);
+		dup2(pip[1], STDOUT_FILENO);
+		close(fdin);
 		close(pip[1]);
 		exec_path(argv[2], env);
 	}
-	return (EXIT_SUCCESS); // No llega aquí porque execve hace que se pire del proceso pero para que no dé guerra
+	return (EXIT_SUCCESS);
 }
 
 int	second_child(int *pip, char **argv, char **env)
@@ -67,9 +67,9 @@ int	second_child(int *pip, char **argv, char **env)
 		fdout = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 		if (fdout == -1)
 			return (error_exit());
-		close(pip[1]); // Cerrar la entrada de escritura de la pipe ya que yo quiero leer de esta pipe
-		dup2(fdout, STDOUT_FILENO); // El documento pasa a ser el STDOUT de consola, ya que viene del proceso padre que no tenía nada forkeado, es un blank slate
-		dup2(pip[0], STDIN_FILENO); // Redirigir el STDIN al extremo de lectura de la pipe ya que quiero leer de ahí, no de la consola
+		close(pip[1]);
+		dup2(fdout, STDOUT_FILENO);
+		dup2(pip[0], STDIN_FILENO);
 		close(fdout);
 		close(pip[0]);
 		exec_path(argv[3], env);
