@@ -18,12 +18,15 @@ static char	*find_env_path(char **env)
 	int		i;
 
 	i = 0;
+	str = NULL;
 	while (env[i] != NULL)
 	{
 		if (!ft_strncmp(env[i], "PATH=", 5))
 			str = ft_strtrim(env[i], "PATH=");
 		i++;
 	}
+	if (str == NULL)
+		leave_program(NULL, NULL);
 	return (str);
 }
 
@@ -46,7 +49,7 @@ static char	**get_path(char **env)
 		aux = ft_strjoin(path[i], "/");
 		if (!aux)
 		{
-			free_commands(path);
+			leave_program(oneline, path);
 			return (NULL);
 		}
 		free(path[i]);

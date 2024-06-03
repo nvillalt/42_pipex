@@ -39,5 +39,6 @@ int		argument_error(void);
 int		leave_program(char *path, char **commands);
 int		error_exit(void);
 void	free_commands(char **commands);
+void	exit_dup_error(int *pip, int fd);
 
 #endif

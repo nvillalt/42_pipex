@@ -26,9 +26,11 @@ int	first_child(int *pip, char **argv, char **env)
 		if (fdin == -1)
 			return (error_exit());
 		close(pip[0]);
-		dup2(fdin, STDIN_FILENO);
-		dup2(pip[1], STDOUT_FILENO);
+		if (dup2(fdin, STDIN_FILENO) == -1)
+			exit_dup_error(pip, fdin);
 		close(fdin);
+		if (dup2(pip[1], STDOUT_FILENO) == -1)
+			exit_dup_error(pip, fdin);
 		close(pip[1]);
 		exec_path(argv[2], env);
 		perror("exec_path");
@@ -50,9 +52,11 @@ int	second_child(int *pip, char **argv, char **env)
 		fdout = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 		if (fdout == -1)
 			return (error_exit());
-		dup2(fdout, STDOUT_FILENO);
-		dup2(pip[0], STDIN_FILENO);
+		if (dup2(fdout, STDOUT_FILENO) == -1)
+			exit_dup_error(pip, fdout);
 		close(fdout);
+		if (dup2(pip[0], STDIN_FILENO) == -1)
+			exit_dup_error(pip, fdout);
 		close(pip[0]);
 		exec_path(argv[3], env);
 		perror("exec_path");

@@ -47,3 +47,15 @@ void	free_commands(char **commands)
 	free(commands);
 	return ;
 }
+
+void	exit_dup_error(int *pip, int fd)
+{
+	perror("pipex error");
+	if (pip && pip[0] != -1)
+		close(pip[0]);
+	if (pip && pip[1] != -1)
+		close(pip[1]);
+	if (fd)
+		close(fd);
+	exit(EXIT_FAILURE);
+}
